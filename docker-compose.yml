@@ -1,0 +1,25 @@
+
+
+services:
+  api: 
+    build: .
+    ports: 
+      - "8080:8080"
+    depends_on: 
+        - mysql
+    environment: 
+        DATABASE_URL: "mysql://root:password@mysql:3306/todo_db"
+  mysql:
+    image: mysql:8
+    environment: 
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: todo_db
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
